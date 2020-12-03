@@ -16,6 +16,9 @@ tmdbv3api is available on the Python Package Index (PyPI) at
 https://pypi.python.org/pypi/tmdbv3api
 
 You can install tmdbv3api using setup.py.
+::
+
+    $ python setup.py install
 
 Usage
 ~~~~~
