@@ -1,5 +1,5 @@
 from tmdbv3api.tmdb import TMDb
-from tmdbv3api.as_obj import AsObj
+from tmdbv3api.as_obj import AsObj, AsObj_id
 
 try:
     from urllib import quote
@@ -65,3 +65,26 @@ class Person(TMDb):
         :return:
         """
         return self._get_obj(self._call(self._urls["popular"], "page=" + str(page)))
+    
+    @staticmethod
+    def _get_obj_id(result, key="results"):
+        if "success" in result and result["success"] is False:
+            raise Exception(result["status_message"])
+        arr = []
+        if key is not None:
+            [arr.append(AsObj_id(**res)) for res in result[key]]
+        else:
+            return result
+        return arr
+
+    def search_id(self, term, page=1):
+        """
+        Search for people.
+        :param term: string
+        :param page: int
+        :return: string: id
+        """
+        return self._get_obj_id(self._call(
+                self._urls["search_people"],
+                "query=" + quote(term) + "&page=" + str(page),))
+        

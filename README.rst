@@ -15,11 +15,7 @@ Install
 tmdbv3api is available on the Python Package Index (PyPI) at
 https://pypi.python.org/pypi/tmdbv3api
 
-You can install tmdbv3api using pip.
-
-::
-
-    $ pip install tmdbv3api
+You can install tmdbv3api using setup.py.
 
 Usage
 ~~~~~
@@ -152,6 +148,12 @@ Get the general person information for a specific id.
 
     print(p.name)
     print(p.biography)
+Get the person's id for the name:
+
+.. code:: python
+    person = Person()
+    id = person.search_id("Brad Pitt")
+    print(id)
 
 Discover movies by different types of data like average rating, number
 of votes, genres and certifications.

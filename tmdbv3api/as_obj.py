@@ -13,3 +13,15 @@ class AsObj:
 
     def __repr__(self):
         return self.obj_name
+
+        
+class AsObj_id:
+    def __init__(self, **entries):
+        if "id" in entries:
+            self.obj_name = str(entries["id"])
+        else:
+            self.obj_name = "TMDB Obj"
+        self.__dict__.update(entries)
+
+    def __repr__(self):
+        return self.obj_name
