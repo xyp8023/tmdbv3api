@@ -33,7 +33,7 @@ class tmdb_base():
         self.person = Person(self.tmdb)
         self.company = Company(self.tmdb)
         
-    def search_movies(self, genre=None, without_genre=None, cast=None, crew=None, people=None, company=None, year=None, rating=None, top=10):
+    def search_movies(self, genre=None, without_genre=None, cast=None, crew=None, people=None, company=None, year=None,upper_year=None, lower_year=None, rating=None, top=10):
         """
         with_genres: string: Comma separated value of genre ids that you want to include in the results.
         without_genres: string: Comma separated value of genre ids that you want to exclude from the results.
@@ -42,6 +42,8 @@ class tmdb_base():
         with_people: string: A comma separated list of person ID's. Only include movies that have one of the ID's added as a either a actor or a crew member.
         with_companies: string: A comma separated list of production company ID's. Only include movies that have one of the ID's added as a production company.
         year: integer: A filter to limit the results to a specific year (looking at all release dates).
+        release_date.gte: string (year-month-day): Filter and only include movies that have a release date (looking at all release dates) that is greater or equal to the specified value.
+        release_date.lte: string (year-month-day): Filter and only include movies that have a release date (looking at all release dates) that is less than or equal to the specified value.
         vote_average.gte: number: Filter and only include movies that have a rating that is greater or equal to the specified value.
         """
 
@@ -55,6 +57,12 @@ class tmdb_base():
             request_dic['without_genres'] = str(self.genres_dict[without_genre])
         if year is not None:
             request_dic['year']=year
+        else:
+            if upper_year is not None:
+                request_dic['release_date.lte'] = str(upper_year)+"-12-31"
+            if lower_year is not None:
+                request_dic['release_date.gte'] = str(lower_year)+"-01-01"
+
         if rating is not None:
             request_dic['vote_average.gte'] = rating
         if company is not None:
@@ -122,5 +130,16 @@ if __name__ == "__main__":
     # search by genre, compony
     # show = tmdb_base.search_movies(genre="Romance", company='Walt Disney Pictures')
     show = tmdb_base.search_movies(genre="Romance", company='Disney')
+
+    print(show, '\n')
+
+
+    # search by genre, upper year
+    show = tmdb_base.search_movies(genre="Romance", upper_year=2010)
+
+    print(show, '\n')
+
+    # search by genre, lower year
+    show = tmdb_base.search_movies(genre="Romance", lower_year=2010)
 
     print(show, '\n')
