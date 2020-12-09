@@ -187,7 +187,7 @@ class tmdb_base():
         show = self.discover.discover_movies(request_dic)
 
         # return the top 10 list by default
-        return str(show[:top])
+        return [str(item) for item in show[:top]]
 
     
 
@@ -201,5 +201,8 @@ if __name__ == "__main__":
     
     tmdb_base.set_attributes(conv_json)
     show = tmdb_base.search_movies()
-    s = json.dumps(show)
-    print(show, '\n')
+    print(show)
+    nl = '\n'.join(show)
+    print(nl)
+    # s = json.dumps(show)
+    # print(show, '\n')
